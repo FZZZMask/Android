@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="top.rayzhao98.fzzzmask.LoginActivity">
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="登录"
+        app:layout_constraintTop_toBottomOf="@+id/loginPasswordEditText"
+        tools:layout_editor_absoluteX="148dp" />
+
+    <TextView
+        android:id="@+id/loginUsernameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="用户名或邮箱"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/loginUsernameEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/loginUsernameEditText" />
+
+    <TextView
+        android:id="@+id/loginPasswordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="密码"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/loginPasswordEditText"
+        app:layout_constraintStart_toStartOf="@+id/loginUsernameTextView"
+        app:layout_constraintTop_toTopOf="@+id/loginPasswordEditText" />
+
+    <EditText
+        android:id="@+id/loginUsernameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="159dp" />
+
+    <EditText
+        android:id="@+id/loginPasswordEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@+id/loginUsernameEditText"
+        tools:layout_editor_absoluteX="159dp" />
+
+</android.support.constraint.ConstraintLayout>
