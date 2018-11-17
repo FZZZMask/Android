@@ -1,12 +1,6 @@
 package top.rayzhao98.fzzzmask;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,21 +11,6 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 public class MainActivity extends MyBluetooth {
 
@@ -57,7 +36,27 @@ public class MainActivity extends MyBluetooth {
         mainPM25TextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("test", "onClick: " + test);
                 Intent intent = new Intent(MainActivity.this, GraphActivity.class);
+                intent.putExtra("data", dustArrayList);
+                startActivity(intent);
+            }
+        });
+
+        mainTemperatureTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GraphActivity.class);
+                intent.putExtra("data", temperatureArrayList);
+                startActivity(intent);
+            }
+        });
+
+        mainHumidityTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GraphActivity.class);
+                intent.putExtra("data", humidityArrayList);
                 startActivity(intent);
             }
         });

@@ -1,6 +1,5 @@
 package top.rayzhao98.fzzzmask;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -35,9 +34,33 @@ public class MyBluetooth extends AppCompatActivity {
     TextView mainWeatherTextView;
     TextView mainTemperatureTextView;
     TextView mainHumidityTextView;
+    public String test = "233";
+
+    public ArrayList<String> dustArrayList = new ArrayList<String>();
+    public ArrayList<String> temperatureArrayList = new ArrayList<String>();
+    public ArrayList<String> humidityArrayList = new ArrayList<String>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        handler = new MyHandler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+            }
+        };
+    }
+
+    public ArrayList<String> getDustArrayList() {
+        return dustArrayList;
+    }
+
+    public ArrayList<String> getTemperatureArrayList() {
+        return temperatureArrayList;
+    }
+
+    public ArrayList<String> getHumidityArrayList() {
+        return humidityArrayList;
     }
 
     public void bluetoothfunction() {
@@ -93,22 +116,33 @@ public class MyBluetooth extends AppCompatActivity {
                             buf_data[i] = buffer[i];
                         }
                         b += new String(buf_data);
+                        String dust = "";
+                        String temperature = "";
+                        String humidity = "";
                         if(b.indexOf("\r")>=0){
                             Log.d("res", "run: " + b);
                             JSONObject jsonb = null;
                             try {
                                 jsonb = new JSONObject(b);
                                 Log.d("json", "run: " + jsonb.getString("dust"));
-                                final String dust = jsonb.getString("dust") + "μg/m³";
-                                final String temperature = jsonb.getString("temperature") + " ℃";
-                                final String humidity = jsonb.getString("humidity") + "%";
+                                dust = jsonb.getString("dust");
+                                temperature = jsonb.getString("temperature");
+                                humidity = jsonb.getString("humidity");
+
                                 final String breath = jsonb.getString("breath");
+                                final String finalDust = dust;
+                                final String finalTemperature = temperature;
+                                final String finalHumidity = humidity;
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        mainPM25TextView.setText(dust);
-                                        mainTemperatureTextView.setText(temperature);
-                                        mainHumidityTextView.setText(humidity);
+                                        mainPM25TextView.setText(finalDust + "μg/m³");
+                                        mainTemperatureTextView.setText(finalTemperature + " ℃");
+                                        mainHumidityTextView.setText(finalHumidity + "%");
+
+                                        dustArrayList.add(finalDust);
+                                        temperatureArrayList.add(finalTemperature);
+                                        humidityArrayList.add(finalHumidity);
                                     }
                                 });
                             } catch (JSONException e) {
