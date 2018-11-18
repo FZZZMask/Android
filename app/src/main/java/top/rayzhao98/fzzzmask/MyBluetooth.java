@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -18,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -161,12 +163,22 @@ public class MyBluetooth extends AppCompatActivity {
                                         dustArrayList.add(finalDust);
                                         temperatureArrayList.add(finalTemperature);
                                         humidityArrayList.add(finalHumidity);
+                                        SharedPreferences sharedPreferences = getSharedPreferences("fzzz", 0);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        long timestamp = System.currentTimeMillis();
+                                        long lastTimeStamp = sharedPreferences.getLong("lastTimeStamp", 0);
+                                        Log.d("test", "run: " + timestamp + " " + lastTimeStamp);
+                                        if ((Integer.parseInt(finalHumidity) < 70) && (lastTimeStamp == 0 || (timestamp - lastTimeStamp) > 10000)) {
+                                            Toast.makeText(MyBluetooth.this, "该喝水啦", Toast.LENGTH_SHORT).show();
+                                            editor.putLong("lastTimeStamp", timestamp);
+                                            editor.apply();
+                                        }
+
                                         double lat = 0;
                                         double lng = 0;
 
                                         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                                        String provider = LocationManager.NETWORK_PROVIDER;// 指定LocationManager的定位方法
-//NETWORK_PROVIDER 网络定位、GPS_PROVIDER GPS定位
+                                        String provider = LocationManager.NETWORK_PROVIDER;
                                         @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(provider);// 调用getLastKnownLocation()方法获取当前的位置信息
                                         if (location != null) {
                                             lat = location.getLatitude();//获取纬度
