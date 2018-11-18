@@ -1,16 +1,27 @@
 package top.rayzhao98.fzzzmask;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +32,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Ray on 2018/11/18.
@@ -119,7 +137,7 @@ public class MyBluetooth extends AppCompatActivity {
                         String dust = "";
                         String temperature = "";
                         String humidity = "";
-                        if(b.indexOf("\r")>=0){
+                        if (b.indexOf("\r") >= 0) {
                             Log.d("res", "run: " + b);
                             JSONObject jsonb = null;
                             try {
@@ -143,6 +161,41 @@ public class MyBluetooth extends AppCompatActivity {
                                         dustArrayList.add(finalDust);
                                         temperatureArrayList.add(finalTemperature);
                                         humidityArrayList.add(finalHumidity);
+
+                                        OkHttpClient client = new OkHttpClient();
+                                        FormBody formBody = new FormBody.Builder()
+                                                .add("user", "5")
+                                                .add("latitude", "")
+                                                .add("longitude", "")
+                                                .add("is_cold", "False")
+                                                .add("pm25_value", finalDust)
+                                                .add("is_health", "True")
+                                                .build();
+                                        Request request = new Request.Builder()
+                                                .url(ApiConfig.API_ROOT + "/msg/")
+                                                .addHeader("Authorization", "Token " + ApiConfig.KEY)
+                                                .addHeader("Content-Type", "application/json")
+                                                .post(formBody)
+                                                .build();
+//                                        Request request = new Request.Builder()
+//                                                .get()
+//                                                .url("http://192.168.1.103:8000/api/v1/visual/health/")
+//                                                .build();
+                                        Call call = client.newCall(request);
+                                        call.enqueue(new Callback() {
+                                            @Override
+                                            public void onFailure(Call call, IOException e) {
+                                                Log.d("fail", "onFailure: " + "fail");
+                                            }
+
+                                            @Override
+                                            public void onResponse(Call call, Response response) throws IOException {
+                                                Log.d("res", "onResponse: " + response.body().string());
+                                            }
+                                        });
+
+
+//                                        uploadMsg(finalDust);
                                     }
                                 });
                             } catch (JSONException e) {
@@ -169,6 +222,61 @@ public class MyBluetooth extends AppCompatActivity {
             }
         }
     }
+
+    public void uploadMsg(String dust) {
+
+
+//        LocationManager locationManager = (LocationManager) this.getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+//        double latitude = 0;
+//        double longitude = 0;
+//        AMapLocationClient mLocationClient = null;
+//        AMapLocationListener mLocationListener = new AMapLocationListener() {
+//            @Override
+//            public void onLocationChanged(AMapLocation aMapLocation) {
+//
+//            }
+//        };
+//        mLocationClient = new AMapLocationClient(getApplicationContext());
+//        mLocationClient.setLocationListener(mLocationListener);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        String provider = LocationManager.NETWORK_PROVIDER;// 指定LocationManager的定位方法
+//NETWORK_PROVIDER 网络定位、GPS_PROVIDER GPS定位
+        @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(provider);// 调用getLastKnownLocation()方法获取当前的位置信息
+//        double lat = location.getLatitude();//获取纬度
+//        double lng = location.getLongitude();//获取经度
+
+        OkHttpClient client = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder()
+                .add("user", "5")
+                .add("latitude", "")
+                .add("longitude", String.valueOf(100))
+                .add("is_cold", "False")
+                .add("pm25_value", dust)
+                .add("is_health", "True")
+                .build();
+        Request request = new Request.Builder()
+                .get()
+                .url(ApiConfig.API_ROOT)
+//                .addHeader("Authorization", "Token " + ApiConfig.KEY)
+//                .addHeader("Content-Type", "application/json")
+//                .post(formBody)
+                .build();
+        Call call = client.newCall(request);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("error", "onFailure: " + "fail");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d("response", "onResponse: " + response.body().string());
+            }
+        });
+    }
+
+
 
     class MyHandler extends Handler {
 

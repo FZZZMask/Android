@@ -37,7 +37,8 @@ public class MainActivity extends MyBluetooth {
             @Override
             public void onClick(View v) {
                 Log.d("test", "onClick: " + test);
-                Intent intent = new Intent(MainActivity.this, GraphActivity.class);
+                Intent intent = new Intent(MainActivity.this, DustGraphActivity.class);
+                intent.putExtra("type", "dust");
                 intent.putExtra("data", dustArrayList);
                 startActivity(intent);
             }
@@ -46,7 +47,8 @@ public class MainActivity extends MyBluetooth {
         mainTemperatureTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, GraphActivity.class);
+                Intent intent = new Intent(MainActivity.this, TemperatureGraphActivity.class);
+                intent.putExtra("type", "temperature");
                 intent.putExtra("data", temperatureArrayList);
                 startActivity(intent);
             }
@@ -55,7 +57,8 @@ public class MainActivity extends MyBluetooth {
         mainHumidityTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, GraphActivity.class);
+                Intent intent = new Intent(MainActivity.this, HumidityGraphActivity.class);
+                intent.putExtra("type", "humidity");
                 intent.putExtra("data", humidityArrayList);
                 startActivity(intent);
             }

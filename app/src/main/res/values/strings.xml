@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">FZZZMask</string>
     <string name="API_ROOT">http://127.0.0.1:8000/api/v1</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

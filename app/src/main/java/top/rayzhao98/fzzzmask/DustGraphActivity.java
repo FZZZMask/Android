@@ -1,6 +1,7 @@
 package top.rayzhao98.fzzzmask;
 
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,12 +11,12 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 
-public class GraphActivity extends MyBluetooth {
+public class DustGraphActivity extends MyBluetooth {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graph);
+        setContentView(R.layout.activity_dust_graph);
 
         Intent intent = getIntent();
         ArrayList<String> myArrayList = null;
@@ -23,11 +24,14 @@ public class GraphActivity extends MyBluetooth {
             myArrayList = intent.getStringArrayListExtra("data");
             Log.d("data", "onCreate: " + myArrayList);
         }
-        DataPoint[] dataPoints = new DataPoint[myArrayList.size()];
+        DataPoint[] dataPoints = new DataPoint[myArrayList.size() + dustArrayList.size()];
         for (int i = 0; i < myArrayList.size(); i++) {
             dataPoints[i] = new DataPoint(i, Double.parseDouble(myArrayList.get(i)));
         }
-        GraphView graph = (GraphView) findViewById(R.id.graph);
+        for (int i = 0; i < dustArrayList.size(); i++) {
+            dataPoints[i] = new DataPoint(i = myArrayList.size(), Double.parseDouble(dustArrayList.get(i)));
+        }
+        GraphView graph = (GraphView) findViewById(R.id.dustGraph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
         graph.addSeries(series);
     }
