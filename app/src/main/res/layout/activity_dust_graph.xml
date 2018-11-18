@@ -6,9 +6,19 @@
     android:layout_height="match_parent"
     tools:context="top.rayzhao98.fzzzmask.DustGraphActivity">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:text="PM2.5 含量折线图"
+        android:textSize="18sp" />
+
     <com.jjoe64.graphview.GraphView
+        android:id="@+id/dustGraph"
         android:layout_width="match_parent"
         android:layout_height="200dip"
-        android:id="@+id/dustGraph" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -35,8 +35,11 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".DustGraphActivity" />
         <activity android:name=".TemperatureGraphActivity" />
-        <activity android:name=".HumidityGraphActivity"></activity>
-        <service android:name="com.amap.api.location.APSService"></service>
+        <activity android:name=".HumidityGraphActivity" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
+        <activity android:name=".WebShowActivity"></activity>
     </application>
 
 </manifest>

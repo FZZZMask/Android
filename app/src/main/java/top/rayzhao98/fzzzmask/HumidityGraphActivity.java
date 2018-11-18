@@ -32,6 +32,9 @@ public class HumidityGraphActivity extends MyBluetooth {
             dataPoints[i] = new DataPoint(i + myArrayList.size(), Double.parseDouble(humidityArrayList.get(i)));
         }
         GraphView graph = (GraphView) findViewById(R.id.humidityGraph);
+        graph.getViewport().setMaxY(100);
+        graph.getViewport().setMinY(0);
+
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
         graph.addSeries(series);
     }

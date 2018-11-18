@@ -5,6 +5,6 @@ package top.rayzhao98.fzzzmask;
  */
 
 public class ApiConfig {
-    public static final String API_ROOT = "http://192.168.1.103:8000/api/v1";
-    public static final String KEY = "bf210a11b7b15733bede3682dac2ed82b119bd69";
+    public static final String API_ROOT = "http://hackathonATEastChina.triplez.cn:8888/api/v1";
+    public static final String KEY = "6b0f17ce71659466c3f4c0c9e92fb03c82c537d3";
 }

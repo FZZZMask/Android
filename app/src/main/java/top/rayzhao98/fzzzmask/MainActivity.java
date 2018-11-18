@@ -2,6 +2,7 @@ package top.rayzhao98.fzzzmask;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.view.menu.ShowableListMenu;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ public class MainActivity extends MyBluetooth {
     TextView mainWeatherTextView;
     TextView mainTemperatureTextView;
     TextView mainHumidityTextView;
+    TextView moreTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class MainActivity extends MyBluetooth {
         mainTemperatureTextView = findViewById(R.id.mainTemperatureTextView);
         mainHumidityTextView = findViewById(R.id.mainHumidityTextView);
         mainWeatherTextView = findViewById(R.id.mainWeatherTextView);
+        moreTextView = findViewById(R.id.moreTextView);
 
         super.mainPM25TextView = mainPM25TextView;
         super.mainTemperatureTextView = mainTemperatureTextView;
@@ -60,6 +63,14 @@ public class MainActivity extends MyBluetooth {
                 Intent intent = new Intent(MainActivity.this, HumidityGraphActivity.class);
                 intent.putExtra("type", "humidity");
                 intent.putExtra("data", humidityArrayList);
+                startActivity(intent);
+            }
+        });
+
+        moreTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, WebShowActivity.class);
                 startActivity(intent);
             }
         });

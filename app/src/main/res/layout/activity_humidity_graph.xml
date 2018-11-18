@@ -6,9 +6,21 @@
     android:layout_height="match_parent"
     tools:context="top.rayzhao98.fzzzmask.HumidityGraphActivity">
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="呼吸气体湿度折线图"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.jjoe64.graphview.GraphView
+        android:id="@+id/humidityGraph"
         android:layout_width="match_parent"
         android:layout_height="200dip"
-        android:id="@+id/humidityGraph" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>

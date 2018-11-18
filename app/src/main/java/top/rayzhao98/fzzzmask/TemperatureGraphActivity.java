@@ -32,6 +32,9 @@ public class TemperatureGraphActivity extends MyBluetooth {
             dataPoints[i] = new DataPoint(i + myArrayList.size(), Double.parseDouble(temperatureArrayList.get(i)));
         }
         GraphView graph = (GraphView) findViewById(R.id.tempratureGraph);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMaxY(40);
+        graph.getViewport().setMinY(0);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
         graph.addSeries(series);
     }

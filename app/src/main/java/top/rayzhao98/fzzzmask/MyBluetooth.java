@@ -161,12 +161,24 @@ public class MyBluetooth extends AppCompatActivity {
                                         dustArrayList.add(finalDust);
                                         temperatureArrayList.add(finalTemperature);
                                         humidityArrayList.add(finalHumidity);
+                                        double lat = 0;
+                                        double lng = 0;
+
+                                        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                                        String provider = LocationManager.NETWORK_PROVIDER;// 指定LocationManager的定位方法
+//NETWORK_PROVIDER 网络定位、GPS_PROVIDER GPS定位
+                                        @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(provider);// 调用getLastKnownLocation()方法获取当前的位置信息
+                                        if (location != null) {
+                                            lat = location.getLatitude();//获取纬度
+                                            lng = location.getLongitude();//获取经度
+                                        }
+
 
                                         OkHttpClient client = new OkHttpClient();
                                         FormBody formBody = new FormBody.Builder()
                                                 .add("user", "5")
-                                                .add("latitude", "")
-                                                .add("longitude", "")
+                                                .add("latitude", String.valueOf(lat))
+                                                .add("longitude", String.valueOf(lng))
                                                 .add("is_cold", "False")
                                                 .add("pm25_value", finalDust)
                                                 .add("is_health", "True")
@@ -238,12 +250,7 @@ public class MyBluetooth extends AppCompatActivity {
 //        };
 //        mLocationClient = new AMapLocationClient(getApplicationContext());
 //        mLocationClient.setLocationListener(mLocationListener);
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        String provider = LocationManager.NETWORK_PROVIDER;// 指定LocationManager的定位方法
-//NETWORK_PROVIDER 网络定位、GPS_PROVIDER GPS定位
-        @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(provider);// 调用getLastKnownLocation()方法获取当前的位置信息
-//        double lat = location.getLatitude();//获取纬度
-//        double lng = location.getLongitude();//获取经度
+
 
         OkHttpClient client = new OkHttpClient();
         FormBody formBody = new FormBody.Builder()
